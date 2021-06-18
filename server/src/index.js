@@ -1,32 +1,27 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-
-const port = process.env.PORT || 4001;
-
-const app = express();
-
-const server = http.createServer(app);
-
-const io = socketIo(server);
+require('dotenv').config()
+const app = require('express')()
+const server = require('http').createServer(app)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+})
 
 io.on("connection", (socket) => {
 
   let interval;
   console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
+
+  interval = setInterval(() => {
+    const response = new Date();
+    socket.emit("FromAPI", response);
+  }, 1000);
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
 });
 
-const getApiAndEmit = socket => {
-  const response = new Date();
-  socket.emit("FromAPI", response);
-};
-
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(process.env.PORT, () => console.log('[SERVER] On on port ' + process.env.PORT))

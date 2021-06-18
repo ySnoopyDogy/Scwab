@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4001";
+import io from "socket.io-client";
 
 export default function ClientComponent() {
   const [response, setResponse] = useState("");
-
+  
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const socket = io(process.env.REACT_APP_WEBSOCKET_URI);
     socket.on("FromAPI", data => {
       setResponse(data);
     });
+
+    return () => socket.disconnect();
 
   }, []);
 
