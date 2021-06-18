@@ -1,0 +1,21 @@
+{
+  "name": "scwab",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "A website to play the Escoba Card Game",
+  "scripts": {
+    "client": "yarn workspace scwab-client",
+    "server": "yarn workspace scwab-server"
+  },
+  "repository": {
+    "url": "git+https://github.com/ySnoopyDogy/Scwab.git",
+    "type": "git"
+  },
+  "author": "Luxanna <CommandPlayermine@gmail.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "./*"
+    ]
+  }
+}
