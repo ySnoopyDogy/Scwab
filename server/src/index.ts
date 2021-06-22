@@ -1,4 +1,4 @@
-const Game = require('./Game')
+import Game from './Game'
 
 require('dotenv').config()
 const app = require('express')()
